@@ -1,0 +1,87 @@
+{
+    "name": "latexindent",
+    "publisher": "xxxxxxx",
+    "author": "LenAgain",
+    "version": "0.0.1",
+    "preview": true,
+    "description": "LaTeX formatting support via latexindent",
+    "icon": "icon.png",
+    "license": "GPL-3.0-or-later",
+    "repository": {
+        "url": "https://github.com/LenAgain/vscode-latexindent.git",
+        "type": "git"
+    },
+    "categories": [
+        "Formatters"
+    ],
+    "keywords": [
+        "tex",
+        "latex",
+        "formatter",
+        "latexindent"
+    ],
+    "engines": {
+        "vscode": "^1.77.0"
+    },
+    "activationEvents": [
+        "onLanguage:latex"
+    ],
+    "extensionKind": [
+        "workspace"
+    ],
+    "contributes": {
+        "configuration": {
+            "title": "latexindent",
+            "properties": {
+                "latexindent.executable": {
+                    "markdownDescription": "The path to the `latexindent` executable.",
+                    "type": "string",
+                    "scope": "resource",
+                    "default": "latexindent"
+                },
+                "latexindent.args": {
+                    "markdownDescription": "Additional arguments to pass to `latexindent`.",
+                    "type": "array",
+                    "scope": "resource",
+                    "default": [],
+                    "items": {
+                        "type": "string",
+                        "$comment": "Regex with a negative lookahead assertion to forbid arguments that would break the extension.",
+                        "pattern": "^(?!-{1,2}(v|version|vv|vversion|h|help|w|overwrite|wd|overwriteIfDifferent|o|outputfiles|s|silent|sl|screenlog|k|check|kv|checkv|n|lines)([ =]|$)).*",
+                        "patternErrorMessage": "Forbidden argument"
+                    }
+                },
+                "latexindent.useDocumentFormat": {
+                    "description": "Whether to use the editor tabsize to format documents.",
+                    "type": "boolean",
+                    "scope": "resource",
+                    "default": false
+                }
+            }
+        }
+    },
+    "main": "./dist/extension.js",
+    "scripts": {
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --external:vscode --format=cjs --platform=node",
+        "build": "npm run esbuild-base -- --outfile=out/extension.js --sourcemap",
+        "watch": "npm run esbuild-base -- --outfile=out/extension.js --sourcemap --watch",
+        "vscode:prepublish": "npm run esbuild-base -- --outfile=dist/extension.js --minify",
+        "lint": "eslint src --ext ts",
+        "pretest": "npm run build && npm run lint",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^8.1.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@types/vscode": "^1.77.0",
+        "@typescript-eslint/eslint-plugin": "^5.56.0",
+        "@typescript-eslint/parser": "^5.56.0",
+        "@vscode/test-electron": "^2.3.0",
+        "esbuild": "^0.17.18",
+        "eslint": "^8.36.0",
+        "glob": "^8.1.0",
+        "mocha": "^10.2.0",
+        "typescript": "^4.9.5"
+    }
+}
