@@ -1,7 +1,7 @@
 {
     "name": "latexindent",
-    "publisher": "xxxxxxx",
     "author": "LenAgain",
+    "publisher": "lenagain",
     "version": "0.0.1",
     "preview": true,
     "description": "LaTeX formatting support via latexindent",
